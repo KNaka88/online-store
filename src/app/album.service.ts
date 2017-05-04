@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Album } from './album.model';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Injectable()
 export class AlbumService {
   albums: FirebaseListObservable<any[]>;
-  constructor(private angularFire: AngularFire) {
-     this.albums = angularFire.database.list('albums');
+  constructor(private db: AngularFireDatabase) {
+     this.albums = db.list('albums');
    }
   getAlbums() {
      return this.albums;
@@ -17,7 +17,7 @@ export class AlbumService {
   }
 
   getAlbumById(albumId: string){
-    return this.angularFire.database.object('albums/' + albumId);
+    return this.db.object('albums/' + albumId);
   }
 
   updateAlbum(localUpdatedAlbum){
